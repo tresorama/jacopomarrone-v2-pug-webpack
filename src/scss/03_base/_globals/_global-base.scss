@@ -1,0 +1,7 @@
+body {
+  @include text('body');
+  line-height: calc(100% + 10px);
+  letter-spacing: 0.18em;
+  word-spacing: 0.1em;
+  @include cursor1;
+}

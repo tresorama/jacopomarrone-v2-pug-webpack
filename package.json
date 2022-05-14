@@ -1,0 +1,32 @@
+{
+  "name": "Portfolio - Jacopo Marrone",
+  "version": "1.0.0",
+  "description": "Source code for Jacopo Marrone website",
+  "main": "index.js",
+  "scripts": {
+    "dev:assets": "webpack --watch",
+    "dev:server": "webpack serve --open",
+    "build": "rm -rf ./dist && webpack --config webpack.config.production.js"
+  },
+  "keywords": [],
+  "author": "Jacopo Marrone",
+  "license": "ISC",
+  "devDependencies": {
+    "@webdiscus/pug-loader": "^2.1.1",
+    "copy-webpack-plugin": "^10.2.4",
+    "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "sass": "^1.51.0",
+    "sass-loader": "^12.6.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.9.0"
+  },
+  "dependencies": {
+    "@jacopomarrone/fu-prototype-gui": "^1.0.0",
+    "axios": "^0.27.2",
+    "gsap": "^3.10.4",
+    "sweetalert2": "^11.4.14"
+  }
+}

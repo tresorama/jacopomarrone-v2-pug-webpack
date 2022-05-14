@@ -1,0 +1,6 @@
+.contact {
+  &__headline {
+    @include text('h5');
+    order: 1;
+  }
+}

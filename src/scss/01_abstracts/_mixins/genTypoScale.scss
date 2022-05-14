@@ -1,0 +1,40 @@
+/* SOME TYPOGRAFY CALCULATION NEED THIS SASS MODULE */
+@use "sass:math";
+
+/* typography */
+/* reference
+$text-scale
+$text-size-4xl : 5.653rem;
+$text-size-3xl : 3.998rem;
+$text-size-2xl : 2.827rem;
+$text-size-xl : 1.999rem;
+$text-size-lg : 1.414rem;
+$text-size-md : 1rem;
+$text-size-sm : 0.707rem;
+*/
+
+/* MIXIN - GENERATE ALL CSS CUSTOM PROPERTIES */
+@mixin genTypoScaleByRatio($typo-scale-ratio, $min: -2, $max: 6) {
+  @for $i from $min through $max {
+    --font-size-level#{$i}: #{math.pow($typo-scale-ratio, $i)}rem;
+  }
+  // example of compiled (from -2 throungh 6)
+  // --font-size-level-2: 0.7901234568rem;
+  // --font-size-level-1: 0.8888888889rem;
+  // --font-size-level0: 1rem;
+  // --font-size-level1: 1.125rem;
+  // --font-size-level2: 1.265625rem;
+  // --font-size-level3: 1.423828125rem;
+  // --font-size-level4: 1.6018066406rem;
+  // --font-size-level5: 1.8020324707rem;
+  // --font-size-level6: 2.0272865295rem;
+}
+/* FUNCTION - LINK FONT SIZE TO CSS CUSTOM PROPERTIES BY LEVEL */
+@function fontsize($level) {
+  @return var(--font-size-level#{$level});
+}
+
+/* USAGE */
+/* 
+https://codepen.io/tresorama/pen/eYGyYRR
+*/

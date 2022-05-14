@@ -1,0 +1,15 @@
+.GSAP-IS-ANIMATING * {
+  transition: none !important;
+}
+
+.prototype-gui {
+  select {
+    background-color: rgba(255,255,255,0.1);
+  }
+}
+
+.blend-mode-disabled * {
+  mix-blend-mode: normal !important;
+  background-blend-mode: normal !important;
+}
+

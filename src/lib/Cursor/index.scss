@@ -1,0 +1,45 @@
+.cursor {
+  // OVERRIDABLES
+  // --width
+  // --height
+  // --border-radius
+  // --bg-color
+  // --text
+
+  // CONTROLLED BY JS
+  // --clientX: 0;
+  // --clientY: 0;
+
+  & {
+    position: fixed;
+    top: var(--clientY);
+    left: var(--clientX);
+    transform: translate(-50%, -50%);
+
+    width: var(--width, 40vw);
+    background-color: var(--bg-color, pink);
+    border-radius: var(--border-radius, 50%);
+    overflow: hidden;
+    display: grid;
+  }
+
+  &::before,
+  &::after {
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: center;
+    align-self: center;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  &::before {
+    content: "";
+    padding-bottom: var(--height, 100%);
+    justify-self: stretch;
+    z-index: -1;
+  }
+  &::after {
+    content: var(--text, "I'm a cursor");
+  }
+}

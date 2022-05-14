@@ -1,0 +1,19 @@
+footer {
+  @mixin text-base {
+    font-size: fontsize(-1);
+    line-height: 0.8;
+    letter-spacing: 0.05em;
+  }
+
+  @include text-base;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0.5rem 1rem;
+  background-color: hsla(0deg, 0%, 10%, 1);
+  color: white;
+
+  .back-to-top {
+    display: none;
+  }
+}

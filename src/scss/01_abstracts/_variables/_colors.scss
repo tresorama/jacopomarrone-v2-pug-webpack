@@ -1,0 +1,14 @@
+@function color($key) {
+  // i.e. color('primary'), color('secondary'), color('text-upfront')
+  @return var(--color-#{$key});
+}
+
+
+:root {
+  /* Colors */
+  --color-primary: #00bcd4;
+  --color-secondary: #ff9800;
+  --color-text-upfront: #{color("black")};
+  --color-text-behind: #{color("grey-600")};
+}
+

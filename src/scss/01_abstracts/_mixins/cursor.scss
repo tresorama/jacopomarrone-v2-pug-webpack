@@ -1,0 +1,24 @@
+@mixin cursor1 {
+  .cursor {
+    --text: none;
+    --width: 7.2vw;
+    --height: 100%;
+    --border-radius: 50px;
+    --bg-color: teal;
+    mix-blend-mode: difference;
+    opacity: 1;
+    cursor: none;
+  }
+}
+@mixin cursor2 {
+  .cursor {
+    --text: none;
+    --width: 7.2vw;
+    --height: 100%;
+    --border-radius: 50px;
+    --bg-color: teal;
+    mix-blend-mode: normal;
+    opacity: 0.5;
+    cursor: none;
+  }
+}

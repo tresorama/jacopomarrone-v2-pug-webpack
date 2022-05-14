@@ -1,0 +1,109 @@
+extends ../layout/layout.default.pug
+
+block variables
+  - var title = 'Jacopo Marrone'
+  - var prefix = FILE_PREFIX
+  //- var extraCSS = [FILE_PREFIX+'css/carousel.css']
+  - var imgPrefixUrl = IMG_PREFIX_URL
+  - var bodyClassName = 'home'
+
+  - 
+    const works = [
+      {
+        name: 'Galleria',
+        image: "/images/works/galleria.png",
+        caption: 'Photographer personal showreel',
+        description: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>',
+        permalink: '#'
+      },
+      {
+        name: 'Color Compare',
+        image: "/images/works/color-compare.png",
+        caption: 'Lorem ipsum dolor sit amet',
+        description: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>',
+        permalink: '#'
+      },
+      {
+        name: 'Fli',
+        image: "/images/works/fli.png",
+        caption: 'Artist artwork presentation',
+        description: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>',
+        permalink: '#'
+      },
+    ];
+
+block content
+  .home-grid
+    .home-grid__box.home-grid__box--no-bg.home-grid__box-different.home-grid-animate.animate-from-left
+      span Jacopo Marrone
+    .home-grid__box.home-grid-animate(data-js="works-toggler")
+      span Works
+    .home-grid__box.home-grid-animate(data-js="contact-toggler")
+      span Contact Me
+
+  .floating-panel.works
+    .floating-panel__inner
+      .floating-panel__header
+        .works__headline
+          span Works
+        .works__close-panel(data-js="works-toggler" data-icon="arrow-left")
+          span Close
+      .floating-panel__content
+        .works__list
+          each work in works
+            .works__item.work
+              .work__header
+                h2.work__title= work.name
+                span.work__caption= work.caption
+              .work__content
+                img.work__image(src= work.image)
+                .work__description
+                  | !{work.description}
+            .works__item-separator.works__item-separator--full-width(data-shape-divider="arrow-down")
+          .works__list-footer
+            .works__close-panel-footer(data-js="works-toggler")
+              span Close
+
+  .floating-panel.contact
+    .floating-panel__inner
+      .floating-panel__header
+        .contact__headline
+          span Contact Me
+        .floating-panel__close-panel(data-js="contact-toggler" data-icon="arrow-left")
+          span Close
+      .floating-panel__content
+        form.contact__form#contact-form
+          .contact__form-content
+            .contact__form-content-inner
+              .contact__form-content-item
+                .contact__form-content-item-inner
+                  .contact__form-content-item-label
+                    span Name
+                  .contact__form-content-item-input
+                    input.contact__form-content-item-input-text(type="text")
+              .contact__form-content-item
+                .contact__form-content-item-inner
+                  .contact__form-content-item-label
+                    span Email
+                  .contact__form-content-item-input
+                    input.contact__form-content-item-input-text(type="text")
+              .contact__form-content-item
+                .contact__form-content-item-inner
+                  .contact__form-content-item-label
+                    span Message
+                  .contact__form-content-item-input
+                    textarea.contact__form-content-item-input-text
+              .contact__form-content-item
+                .contact__form-content-item-inner
+                  .contact__form-content-item-label
+                    span
+                  .contact__form-content-item-input
+                    button.contact__form-content-item-input-button.btn(type="submit")
+                    span Send
+          .contact__form-footer
+            span
+              | Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              | Voluptatum, quisquam, quod, quis, quia, quaerat, quos,
+              | voluptates, voluptatibus, voluptas, voluptate,
+              | voluptatum, quisquam, quod, quis, quia, quaerat, quos,
+              | voluptates, volupt
