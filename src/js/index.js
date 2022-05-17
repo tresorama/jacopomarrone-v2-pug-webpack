@@ -1,6 +1,6 @@
+import Cursor from "./lib/Cursor";
 import Icons from "./module/Icons";
 import ShapeDividers from "./module/ShapeDividers";
-import Cursor from "../lib/Cursor";
 import Works from "./module/Works";
 import HomeGrid from "./module/HomeGrid";
 import Contact from "./module/Contact";

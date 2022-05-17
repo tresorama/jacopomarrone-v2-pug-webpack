@@ -1,9 +1,9 @@
 @mixin cursor1 {
-  .cursor {
+  .cursor-container {
     --text: none;
     --width: 7.2vw;
     --height: 100%;
-    --border-radius: 50px;
+    --border-radius: 50%;
     --bg-color: teal;
     mix-blend-mode: difference;
     opacity: 1;
@@ -11,14 +11,18 @@
   }
 }
 @mixin cursor2 {
-  .cursor {
+  .cursor-container {
     --text: none;
     --width: 7.2vw;
     --height: 100%;
-    --border-radius: 50px;
+    --border-radius: 50%;
     --bg-color: teal;
     mix-blend-mode: normal;
     opacity: 0.5;
     cursor: none;
   }
+}
+
+body {
+  @include cursor1;
 }

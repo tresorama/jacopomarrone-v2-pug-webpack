@@ -10,11 +10,24 @@ const createNodeByHTMLString = (htmlString) => {
 
 export default class Cursor {
   constructor(config = {}) {
-    if (this.earlyAbort()) return;
     this.config = config;
-    this.buildNodes();
-    this.injectToDom();
-    this.subscribeEvents();
+    if (this.earlyAbort()) return;
+    // one time only init
+    this.injectCSS();
+    this.crateNodes();
+    // multiple times init
+    this.media_query_watcher = new MediaQueryWatcher(
+      this.config.mediaQueryString ?? "(min-width: 768px)",
+      (isTruthy) => {
+        if (isTruthy) {
+          this.injectNodesToDom();
+          this.subscribeEvents();
+          return;
+        }
+        this.subscribeEvents(false);
+        this.injectNodesToDom(false);
+      }
+    );
   }
   earlyAbort() {
     let error = null;
@@ -31,16 +44,28 @@ export default class Cursor {
 
     return false;
   }
-  buildNodes() {
+  crateNodes() {
+    this.node = createNodeByHTMLString(this.config.cursorHTML ?? this.cursorHTML);
+  }
+  injectCSS() {
     this.nodeCSS = createNodeByHTMLString(`<style>${this.css}</style>`);
-    this.node = createNodeByHTMLString(this.html);
-  }
-  injectToDom() {
     document.body.appendChild(this.nodeCSS);
-    document.body.appendChild(this.node);
   }
-  subscribeEvents() {
-    window.addEventListener("mousemove", this.onMove.bind(this));
+  injectNodesToDom(force = true) {
+    if (force) {
+      document.body.appendChild(this.node);
+    }
+    else {
+      this.node.parentElement.removeChild(this.node);
+    }
+  }
+  subscribeEvents(force = true) {
+    if (force) {
+      window.addEventListener("mousemove", this.onMove.bind(this));
+    }
+    else {
+      window.removeEventListener("mousemove", this.onMove.bind(this));
+    }
   }
   onMove(e) {
     // get node and configration
@@ -66,12 +91,14 @@ export default class Cursor {
 
   //
   selectors = {
-    base: ".cursor",
+    base: ".cursor-container",
   };
-  html = `<div class="cursor"></div>`;
-
+  cursorHTML = `
+  <div class="cursor-container">
+    <div class="cursor"></div>
+  </div>`;
   css = `
-.cursor {
+.cursor-container {
   position: fixed;
   top: var(--clientY);
   left: var(--clientX);
@@ -83,7 +110,7 @@ export default class Cursor {
   display: grid;
   pointer-events: none;
 }
-.cursor::before, .cursor::after {
+.cursor-container::before, .cursor-container::after {
   grid-row: 1;
   grid-column: 1;
   justify-self: center;
@@ -91,14 +118,26 @@ export default class Cursor {
   min-width: 0;
   min-height: 0;
 }
-.cursor::before {
+.cursor-container::before {
   content: "";
   padding-bottom: var(--height, 100%);
   justify-self: stretch;
   z-index: -1;
 }
-.cursor::after {
+.cursor-container::after {
   content: var(--text, "I'm a cursor");
 }
   `;
+}
+
+class MediaQueryWatcher {
+  constructor(mediaQueryString, callback) {
+    this.callback = callback;
+    this.mqw = window.matchMedia(mediaQueryString);
+    this.mqw.addListener(this.onChange.bind(this));
+    this.callback(this.mqw.matches);
+  }
+  onChange(mq) {
+    this.callback(mq.matches);
+  }
 }
