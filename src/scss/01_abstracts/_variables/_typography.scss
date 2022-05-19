@@ -1,20 +1,21 @@
 // Typography System
 :root {
 
-  font-size: 100%;
-
+  
   @include atSmall {
+    font-size: 100%;
     @include genTypoScaleByRatio(1.125, -3, 15);
   }
-  @include atMedium {
-    @include genTypoScaleByRatio(1.25, -3, 15);
-  }
+  // @include atLarge {
+  //   @include genTypoScaleByRatio(1.25, -3, 15);
+  // }
+  // @include atLarge {
+  //   @include genTypoScaleByRatio(1.333, -3, 15);
+  // }
   @include atLarge {
+    font-size: 112.5%;
     @include genTypoScaleByRatio(1.333, -3, 15);
   }
-  // @include atHuge {
-  //   @include genTypoScaleByRatio(1.414, -3, 15);
-  // }
 
 }
 
@@ -38,6 +39,9 @@
   // --font-family-sans-serif: "Cambay Devanagari", sans-serif;
   // --font-family-sans-serif: "PT Sans", sans-serif;
   // --font-family-sans-serif: "AppleGothic", sans-serif;
+
+  --font-family-sans-serif-2: Optima, sans-serif;
+
   
   --font-family-monospace: 'PT Mono', monospace;
   // --font-family-monospace: 'Andale Mono', monospace;
@@ -53,18 +57,22 @@
 }
 
 :root {
-  --text-gigantic: normal 200 #{fontsize(12)}/1.5 var(--font-family-sans-serif);
-  --text-huge: normal 400 #{fontsize(10)}/1.5 var(--font-family-sans-serif);
-  --text-h1: normal 400 #{fontsize(9)}/1.5 var(--font-family-sans-serif);
-  --text-h2: normal 400 #{fontsize(7)}/1.5 var(--font-family-sans-serif);
+  --text-gigantic: normal 700 #{fontsize(13)}/1.5 var(--font-family-sans-serif);
+  --text-huge: normal 700 #{fontsize(11)}/1.5 var(--font-family-sans-serif);
+  --text-h1: normal 700 #{fontsize(9)}/1.5 var(--font-family-sans-serif);
+  --text-h2: normal 700 #{fontsize(7)}/1.5 var(--font-family-sans-serif);
   --text-h3: normal 400 #{fontsize(5)}/1.5 var(--font-family-sans-serif);
   --text-h4: normal 400 #{fontsize(3)}/1.5 var(--font-family-sans-serif);
   --text-h5: normal 400 #{fontsize(1)}/1.5 var(--font-family-sans-serif);
-  --text-body: normal 400 #{fontsize(0)}/1.71 var(--font-family-sans-serif);
+  --text-body: normal 400 #{fontsize(0)}/1.5 var(--font-family-sans-serif);
   --text-small-1: normal 400 #{fontsize(-1)}/1.2 var(--font-family-sans-serif);
   --text-small-2: normal 400 #{fontsize(-2)}/1.2 var(--font-family-sans-serif);
   --text-small-3: normal 400 #{fontsize(-3)}/1.2 var(--font-family-sans-serif);
   // font: font-style font-variant font-weight font-size/line-height font-family; */
+
+  /* Use this manual override for text that needs to be read easily, like copy of card, article, ... */
+  --font-family-book: var(--font-family-sans-serif-2);
+
 }
 
 

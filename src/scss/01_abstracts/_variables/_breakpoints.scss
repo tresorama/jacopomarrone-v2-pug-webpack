@@ -1,8 +1,8 @@
 // Breakpoint
 $bp-small: "(min-width: 0px)";
-$bp-medium: "(min-width: 414px)";
-$bp-large: "(min-width: 768px)";
-$bp-huge: "(min-width: 1200px)";
+$bp-medium: "(min-width: 768px)";
+$bp-large: "(min-width: 992px)";
+$bp-huge: "(min-width: 1400px)";
 
 @mixin atSmall {
   @media #{$bp-small} {

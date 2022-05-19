@@ -1,4 +1,20 @@
+@use "sass:math";
+
 // Spacing System
 :root {
-  @include genSpaceScale(0.25rem);
+  @include genSpaceScale(math.div(0.25rem, 3));
+
+  @include atMedium {
+    @include genSpaceScale(math.div(0.25rem, 2));
+  }
+
+  @include atLarge {
+    @include genSpaceScale(0.25rem);
+  }
+
+  @include atHuge {
+    @include genSpaceScale(0.25rem);
+  }
+
+
 }

@@ -1,0 +1,62 @@
+@use "sass:color";
+
+.form {
+
+  & {
+    max-width: 55ch;
+    margin: 0 auto;
+  }
+
+  &__heading {
+    @include text('h3');
+    margin-bottom: space(18);
+  }
+
+  &__section + &__section {
+    margin-top: space(15);
+  }
+
+  &__section-heading {
+    @include text('h4');
+    margin-bottom: space(6);
+  }
+  
+  &__section--actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: space(3);
+  }
+
+  &-field+&-field {
+    margin-top: space(6);
+  }
+}
+
+.form-field {
+
+  &,
+  &__label,
+  &__input {
+    display: block;
+    width: 100%;
+  }
+
+  &__label {
+    @include text('small-1');
+    margin-bottom: space(2);
+  }
+
+  input,
+  textarea {
+    padding: 0.5em 1em;
+    width: 100%;
+    max-width: 100%;
+
+    &:focus {
+      outline-width: 4px;
+      outline-style: outset;
+      outline-color: color.change(color('secondary'), $alpha: 0.5);
+    }
+  }
+
+}

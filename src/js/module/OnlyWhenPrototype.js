@@ -14,9 +14,10 @@ export default class PrototypeView {
     const count = (num) => num + 1;
     const initial = (num) => num;
     const initialRandom = (min, max) => getRandomInt(min, max);
-    this.addSelectToPanel("Visual", count(19), "variation--", initial(19));
+    this.addSelectToPanel("Visual", count(20), "variation--", initial(20));
     this.addSelectToPanel("Box Hover", count(5), "hover-fx--", initial(0));
     this.addSelectToPanel("Box Hover B", count(1), "hover-fx-b--", initial(1));
+    this.hidePanel();
   }
 
   addSelectToPanel(label, optionCount, classPrefix, initialOption) {
@@ -41,6 +42,14 @@ export default class PrototypeView {
         initialOption,
       },
     });
+  }
+  hidePanel() {
+    document.body.insertAdjacentHTML('beforeend', `
+    <style>
+      .prototype-gui {
+        display: none;
+      }
+    </style>`);
   }
 }
 

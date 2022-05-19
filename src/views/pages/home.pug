@@ -13,28 +13,28 @@ block variables
         name: 'Galleria',
         image: "/images/works/galleria.jpg",
         caption: 'Photographer personal showreel',
-        description: '<p>Design gives value for what matter for a photographer, his/her photos. Website act only as a background layer that doesn’t t fight for user attention. After user browsed the photographer works can easily contact the photographer with a form where its possible to type a message.</p>',
+        description: '<p>Design gives value for what matter for a photographer, his/her photos.</p><p>Website act only as a background layer that doesn’t fight for user attention.</p><p>After user browsed the photographer works can easily contact the photographer via a form.</p>',
         permalink: '#'
       },
       {
         name: 'Color Compare',
         image: "/images/works/color-compare.jpg",
         caption: 'Lorem ipsum dolor sit amet',
-        description: '<p>A tool for who works everyday with design and color codes ( RGB, HEX, HSL ) that need a simple way to lay down two or more colors next to each other to easily find the “sweet” combination. Nothing less nothing more.</p>',
+        description: '<p>A tool for who works everyday with design and color codes ( RGB, HEX, HSL )</p><p>Useful when you is need to lay down two or more colors next to each other to easily find the “sweet” combination spot. </p><p> Nothing less nothing more.</p>',
         permalink: '#'
       },
       {
         name: 'Fli',
         image: "/images/works/fli.jpg",
         caption: 'Artist artwork presentation',
-        description: '<p>Cinematic sequence landing page used to create hype on product launch. Fli wanted to give strength to his artwork presentation at an important artistic international event providing a countdown to the day of the event.</p>',
+        description: '<p>Cinematic sequence landing page used to create hype on product launch. </p><p>Fli wanted to give strength to his artwork presentation at an important artistic international event providing a countdown to the day of the event.</p>',
         permalink: '#'
       },
       {
         name: 'Smile',
         image: "/images/works/fli.jpg",
         caption: 'Storytelling sequence',
-        description: '<p>"Smile is what makes humans humans. Smiling on a daily basis help humans stay healty". This webpage aims to push the viewer to look for situations in everyday life that bring a smile to his or her face.</p>',
+        description: '<p>"Smile is what makes humans humans. Smiling on a daily basis help humans stay healty".</p><p>This webpage aims to push the viewer to look for situations in everyday life that bring a smile to his or her face.</p>',
         permalink: '#'
       },
     ];
@@ -43,9 +43,9 @@ block content
   .home-grid
     .home-grid__box.home-grid__box--no-bg.home-grid__box-different.home-grid-animate.animate-from-left
       span Jacopo Marrone
-    .home-grid__box.home-grid-animate(data-js="works-toggler")
+    button.home-grid__box.home-grid-animate(data-js="works-toggler")
       span Works
-    .home-grid__box.home-grid-animate(data-js="contact-toggler")
+    button.home-grid__box.home-grid-animate(data-js="contact-toggler")
       span Contact Me
 
   .floating-panel.works
@@ -53,7 +53,7 @@ block content
       .floating-panel__header
         .works__headline
           span Works
-        .works__close-panel(data-js="works-toggler" data-icon="arrow-left")
+        button.works__close-panel(type="button" data-js="works-toggler" data-icon="arrow-left" )
           span Close
       .floating-panel__content
         .works__list
@@ -62,13 +62,16 @@ block content
               .work__header
                 h2.work__title= work.name
                 span.work__caption= work.caption
+              img.work__image(src= work.image)
               .work__content
-                img.work__image(src= work.image)
                 .work__description
                   | !{work.description}
+                .work__actions
+                  a.work__go-to-live.button.button--big(href= work.permalink)
+                    span View Live
             .works__item-separator.works__item-separator--full-width(data-shape-divider="arrow-down")
           .works__list-footer
-            .works__close-panel-footer(data-js="works-toggler")
+            button.works__close-panel-footer(data-js="works-toggler")
               span Close
 
   .floating-panel.contact
@@ -76,41 +79,32 @@ block content
       .floating-panel__header
         .contact__headline
           span Contact Me
-        .floating-panel__close-panel(data-js="contact-toggler" data-icon="arrow-left")
+        button.floating-panel__close-panel(type="button" data-js="contact-toggler" data-icon="arrow-left")
           span Close
       .floating-panel__content
-        form.contact__form#contact-form
-          .contact__form-content
-            .contact__form-content-inner
-              .contact__form-content-item
-                .contact__form-content-item-inner
-                  .contact__form-content-item-label
-                    span Name
-                  .contact__form-content-item-input
-                    input.contact__form-content-item-input-text(type="text")
-              .contact__form-content-item
-                .contact__form-content-item-inner
-                  .contact__form-content-item-label
-                    span Email
-                  .contact__form-content-item-input
-                    input.contact__form-content-item-input-text(type="text")
-              .contact__form-content-item
-                .contact__form-content-item-inner
-                  .contact__form-content-item-label
-                    span Message
-                  .contact__form-content-item-input
-                    textarea.contact__form-content-item-input-text
-              .contact__form-content-item
-                .contact__form-content-item-inner
-                  .contact__form-content-item-label
-                    span
-                  .contact__form-content-item-input
-                    button.contact__form-content-item-input-button.btn(type="submit")
-                    span Send
-          .contact__form-footer
-            span
-              | Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              | Voluptatum, quisquam, quod, quis, quia, quaerat, quos,
-              | voluptates, voluptatibus, voluptas, voluptate,
-              | voluptatum, quisquam, quod, quis, quia, quaerat, quos,
-              | voluptates, volupt
+        form.form.contact-form#contact-form
+          .form__heading
+            span Contact Me
+          .form__section
+            .form__section-heading
+              span Information about you
+            .form-field
+              .form-field__label
+                span Name
+              .form-field__input
+                input(type="text")
+            .form-field
+              .form-field__label
+                span Email
+              .form-field__input
+                input(type="email")
+            .form-field
+              .form-field__label
+                span Message
+              .form-field__input
+                textarea
+          .form__section.form__section--actions
+            button.button(type="submit")
+              span Send
+            button.button.button--naked(type="reset")
+              span Reset

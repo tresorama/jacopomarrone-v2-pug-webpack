@@ -10,8 +10,11 @@ const createNodeByHTMLString = (htmlString) => {
 
 export default class Cursor {
   constructor(config = {}) {
+    if (document.querySelector(this.selectors.base)) {
+      console.error('Cursor already present in DOM. Do you called "new Cursor()" twice in the page ???');
+      return;
+    }
     this.config = config;
-    if (this.earlyAbort()) return;
     // one time only init
     this.injectCSS();
     this.crateNodes();
@@ -22,30 +25,19 @@ export default class Cursor {
         if (isTruthy) {
           this.injectNodesToDom();
           this.subscribeEvents();
+          this.config.afterMount?.(this.node);
           return;
         }
+        this.beforeUnMount?.(this.node);
         this.subscribeEvents(false);
         this.injectNodesToDom(false);
       }
     );
   }
-  earlyAbort() {
-    let error = null;
-
-    if (document.querySelector(this.selectors.base)) {
-      error =
-        'Cursor already present in DOM. Do you called "new Cursor()" twice in the page ???';
-    }
-
-    if (error) {
-      console.log(`Cursor -> Aborted Initialization !! - ${error}`);
-      return true;
-    }
-
-    return false;
-  }
   crateNodes() {
-    this.node = createNodeByHTMLString(this.config.cursorHTML ?? this.cursorHTML);
+    this.node = createNodeByHTMLString(
+      this.createCursorHTML(this.config.cursorHTML)
+    );
   }
   injectCSS() {
     this.nodeCSS = createNodeByHTMLString(`<style>${this.css}</style>`);
@@ -53,10 +45,12 @@ export default class Cursor {
   }
   injectNodesToDom(force = true) {
     if (force) {
+      document.body.classList.add(this.classes.cursor_active);
       document.body.appendChild(this.node);
     }
     else {
-      this.node.parentElement.removeChild(this.node);
+      document.body.classList.remove(this.classes.cursor_active);
+      this.node?.parentElement?.removeChild(this.node);
     }
   }
   subscribeEvents(force = true) {
@@ -93,40 +87,82 @@ export default class Cursor {
   selectors = {
     base: ".cursor-container",
   };
-  cursorHTML = `
+  createCursorHTML = (cursorHTML) => `
   <div class="cursor-container">
-    <div class="cursor"></div>
-  </div>`;
+    ${cursorHTML ?? `<div class="cursor"></div>`}
+    <div class="cursor-dot"></div>
+  </div>
+  `;
+
+  classes = {
+    cursor_active: 'cursor-active'
+  };
+
   css = `
-.cursor-container {
-  position: fixed;
-  top: var(--clientY);
-  left: var(--clientX);
-  transform: translate(-50%, -50%);
-  width: var(--width, 40vw);
-  background-color: var(--bg-color, pink);
-  border-radius: var(--border-radius, 50%);
-  overflow: hidden;
-  display: grid;
-  pointer-events: none;
-}
-.cursor-container::before, .cursor-container::after {
-  grid-row: 1;
-  grid-column: 1;
-  justify-self: center;
-  align-self: center;
-  min-width: 0;
-  min-height: 0;
-}
-.cursor-container::before {
-  content: "";
-  padding-bottom: var(--height, 100%);
-  justify-self: stretch;
-  z-index: -1;
-}
-.cursor-container::after {
-  content: var(--text, "I'm a cursor");
-}
+  body.cursor-active,
+  body.cursor-active * {
+    cursor: none;
+  }
+  .cursor-container,
+  .cursor,
+  .cursor-dot {
+    pointer-events: none;
+  }
+  .cursor-container {
+    position: fixed;
+    top: var(--clientY);
+    left: var(--clientX);
+    transform: translate(-50%, -50%);
+
+    --cursor-width: 40vw;
+    --cursor-height: var(--cursor-width);
+    --cursor-bg: pink;
+    --cursor-border-radius: 50%;
+    --cursor-text: "I'm a cursor";
+    
+    --cursor-dot-bg: white;
+    --cursor-dot-width: 5px;
+    --cursor-dot-height: var(--cursor-dot-width);
+
+  }
+
+  .cursor-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--cursor-dot-bg);
+    width: var(--cursor-dot-width);
+    height: var(--cursor-dot-height);
+    border-radius: var(--cursor-border-radius);
+  }
+
+  .cursor {
+    width: var(--cursor-width);
+    background: var(--cursor-bg);
+    border-radius: var(--cursor-border-radius);
+    overflow: hidden;
+    display: grid;
+    pointer-events: none;
+  }
+
+  .cursor::before, .cursor::after {
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: center;
+    align-self: center;
+    min-width: 0;
+    min-height: 0;
+  }
+  .cursor::before {
+    content: "";
+    padding-bottom: var(--cursor-height);
+    justify-self: stretch;
+    z-index: -1;
+  }
+  .cursor::after {
+    content: var(--cursor-text);
+  }
   `;
 }
 

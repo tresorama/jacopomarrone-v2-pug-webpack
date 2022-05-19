@@ -1,6 +1,22 @@
+body:not(.contact--visible) .contact {
+  visibility: hidden;
+}
+body.contact--visible .contact {
+  visibility: visible;
+}
+
+
 .contact {
+  &__close-panel {
+    @include text('h5');
+  }
+
   &__headline {
     @include text('h5');
     order: 1;
+  }
+
+  &__button {
+    @include text('h5');
   }
 }

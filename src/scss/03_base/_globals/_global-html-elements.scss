@@ -1,4 +1,12 @@
+@use "sass:color";
+
 img {
   max-width: 100%;
   display: block;
+}
+
+*:focus-visible {
+  outline-width: 4px;
+  outline-style: outset;
+  outline-color: color.change(color('secondary'), $alpha: 0.5);
 }

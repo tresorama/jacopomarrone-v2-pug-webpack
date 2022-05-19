@@ -1,4 +1,18 @@
+@use "sass:color";
+
+body:not(.works--visible) .works {
+  visibility: hidden;
+}
+body.works--visible .works {
+  visibility: visible;
+}
+
+
 .works {
+  &__close-panel {
+    @include text('h5');
+  }
+
   &__headline {
     @include text('h5');
     order: 1;
@@ -6,7 +20,6 @@
 
   &__list {
     display: grid;
-    gap: space(70);
     gap: space(20);
   }
 
@@ -18,6 +31,7 @@
     flex-direction: column;
     background-image: linear-gradient(180deg, transparent 0%, currentColor 35%, transparent 60%);
     opacity: 0.35;
+    opacity: 0;
   }
 
   &__item-separator--full-width {
@@ -33,16 +47,21 @@
   }
 }
 
-
 .work {
-  &__header {
-    padding: space(2) 0 space(10);
-    text-align: center;
+  & {
+    padding-bottom: space(10);
+  }
+
+  &__header,
+  &__content {
+    padding: space(10) 0;
+    padding: space(10) 0;
   }
 
   &__title {
     @include text('h2');
     line-height: 1;
+    margin-bottom: space(4);
   }
 
   &__image {
@@ -50,13 +69,38 @@
   }
 
   &__caption {
-    @include text('h5');
+    @include text('h4');
     display: block;
     color: color('grey-800');
-    text-indent: space(10);
   }
 
   &__description {
     @include text("body");
+    font-family: var(--font-family-book);
+
+    p {
+      margin-bottom: space(4);
+    }
+  }
+
+  &__actions {
+    padding: space(5) 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+}
+
+@include atLarge {
+  .work {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+  }
+  .work__image {
+    grid-column: 1/2;
+  }
+  .work__content {
+    padding-left: space(10);
+    padding-RIGHT: space(10);
   }
 }

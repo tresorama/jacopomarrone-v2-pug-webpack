@@ -1,19 +1,31 @@
-import gsap from "gsap";
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import FloatingPanelAnimation from "./FloatingPanelAnimation";
 
-export default class Contact {
+export default class ContactMe {
   constructor() {
+    // return;
     this.node_container = document.querySelector('.contact');
     if (!this.node_container) return;
-    this.animation = new ContactPanelAnimation(this.node_container);
+    this.animation = new FloatingPanelAnimation(this.node_container, {
+      onAnimationEvent: (event) => {
+        if (event === "fade-in-start") {
+          document.body.classList.toggle('contact--visible', true);
+          return;
+        }
+        if (event === "fade-out-end") {
+          document.body.classList.toggle('contact--visible', false);
+          return;
+        }
+      }
+    });
     this.form = new ContactForm(this.node_container);
     this.register_events();
   }
   register_events() {
     document.querySelectorAll('[data-js="contact-toggler"]').forEach(node => {
       node.addEventListener('click', (e) => {
-        document.body.classList.toggle('contact--visible');
+        // document.body.classList.toggle('contact--visible');
         this.animation.TOGGLE();
       });
     });
@@ -21,8 +33,8 @@ export default class Contact {
     document.addEventListener('keyup', (e) => {
       // on "esc" press
       if (e.keyCode === 27) {
-        document.body.classList.toggle('contact--visible', false);
         this.animation.FADE_OUT();
+        // document.body.classList.toggle('contact--visible', false);
       }
     })
   }
@@ -79,47 +91,4 @@ class ContactForm {
     }
   }
 
-}
-
-class ContactPanelAnimation {
-  constructor(node) {
-    this.node = node;
-    this.is_visible = false;
-    this.timeline = this.build_animation(this.node);
-    this.FADE_OUT();
-  }
-  build_animation(domNode) {
-
-    const duration = 0.4;
-    const ease = "ease";
-
-    return gsap.timeline(
-      {
-        paused: true,
-        defaults: { duration, ease }
-      })
-      .from(domNode, {
-        transform: 'scaleX(0)'
-      })
-      .from([...domNode.children], {
-        stagger: duration,
-        opacity: 0
-      });
-
-  }
-  FADE_IN() {
-    this.timeline.play();
-    this.is_visible = true;
-  }
-  FADE_OUT() {
-    this.timeline.reverse();
-    this.is_visible = false;
-  }
-  TOGGLE() {
-    if (this.is_visible) {
-      this.FADE_OUT();
-    } else {
-      this.FADE_IN();
-    }
-  }
 }

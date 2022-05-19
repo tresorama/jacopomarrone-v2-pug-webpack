@@ -1,28 +1,35 @@
 @mixin cursor1 {
   .cursor-container {
-    --text: none;
-    --width: 7.2vw;
-    --height: 100%;
-    --border-radius: 50%;
-    --bg-color: teal;
-    mix-blend-mode: difference;
-    opacity: 1;
-    cursor: none;
+    // mix-blend-mode: exclusion;
+    --cursor-text: none;
+    --cursor-width: 7vw;
+    --cursor-height: 100%;
+    --cursor-border-radius: 50%;
+    --cursor-bg: teal;
+    --cursor-dot-bg: black;
+  }
+  
+  .cursor {
+    opacity: 0.85;
   }
 }
+
 @mixin cursor2 {
   .cursor-container {
-    --text: none;
-    --width: 7.2vw;
-    --height: 100%;
-    --border-radius: 50%;
-    --bg-color: teal;
     mix-blend-mode: normal;
+    --cursor-text: none;
+    --cursor-width: 3.2vw;
+    --cursor-height: 100%;
+    --cursor-border-radius: 50%;
+    --cursor-bg: teal;
+    --cursor-dot-bg: white;
+  }
+
+  .cursor {
     opacity: 0.5;
-    cursor: none;
   }
 }
 
 body {
-  @include cursor1;
+  // @include cursor1;
 }

@@ -237,7 +237,7 @@
 }
 .variation--18 {
   .home-grid {
-    background: #ff9800;
+    background: hsl(36, 100%, 50%);
   }
 
   .home-grid__box {
@@ -250,6 +250,7 @@
   @include cursor1;
 }
 
+
 .variation--19 {
   .home-grid {
     background: white;
@@ -261,6 +262,21 @@
     background-blend-mode: normal;
   }
   @include cursor2;
+}
+
+.variation--20 {
+  .home-grid {
+    background: hsl(42, 100%, 50%);
+  }
+
+  .home-grid__box {
+    color: white;
+    // background: red;
+    background-image: linear-gradient(89deg, #cd4839 10%, transparent 100%);
+    background-blend-mode: exclusion;
+  }
+
+  @include cursor1;
 }
 
 //
@@ -334,13 +350,13 @@
   // NOTHING
 }
 .hover-fx-b--1 {
-  .home-grid__box span {
+  .home-grid__box:not(.home-grid__box-different) > * {
     transition-duration: 200ms;
     transition-property: transform;
     transform: none;
     transform-origin: bottom left;
   }
-  .home-grid__box:hover span {
+  .home-grid__box:not(.home-grid__box-different):hover > * {
     transform: translateY(-20%) scale(1.1);
   }
 }
