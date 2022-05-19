@@ -27,13 +27,13 @@
   }
 
   &:before {
-    background: linear-gradient(135deg, color('grey-300'), transparent);
+    background: linear-gradient(135deg, color('grey-300'), color("transparent"));
   }
 
   &:after {
     background: linear-gradient(135deg,
         color.change(color('primary'), $alpha: 0.42),
-        transparent);
+        color("transparent"));
     transition: transform var(--transition-preset-2);
     transform: translateX(-100%);
     mix-blend-mode: multiply;

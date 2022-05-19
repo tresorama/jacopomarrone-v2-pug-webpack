@@ -29,7 +29,7 @@ body.works--visible .works {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    background-image: linear-gradient(180deg, transparent 0%, currentColor 35%, transparent 60%);
+    background-image: linear-gradient(180deg, color("transparent") 0%, currentColor 35%, color("transparent") 60%);
     opacity: 0.35;
     opacity: 0;
   }
