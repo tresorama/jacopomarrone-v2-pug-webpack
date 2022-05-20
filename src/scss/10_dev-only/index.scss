@@ -1,6 +1,5 @@
-.GSAP-IS-ANIMATING * {
-  transition: none !important;
-}
+@import "./demo_typography";
+@import "./stack";
 
 .prototype-gui {
   select {

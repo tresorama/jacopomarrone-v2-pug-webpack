@@ -9,13 +9,9 @@ body.works--visible .works {
 
 
 .works {
-  &__close-panel {
-    @include text('h5');
-  }
 
   &__headline {
-    @include text('h5');
-    order: 1;
+    @include text('h4');
   }
 
   &__list {
@@ -23,18 +19,18 @@ body.works--visible .works {
     gap: space(20);
   }
 
-  &__item-separator {
-    color: color('grey-400');
+  &__list-item-separator {
     height: space(50);
     display: flex;
     justify-content: center;
     flex-direction: column;
     background-image: linear-gradient(180deg, color("transparent") 0%, currentColor 35%, color("transparent") 60%);
+    color: color('grey-400');
     opacity: 0.35;
     opacity: 0;
   }
 
-  &__item-separator--full-width {
+  &__list-item-separator--full-width {
     width: 100vw;
     margin-left: space(-28);
     margin-right: space(-28);
@@ -55,23 +51,21 @@ body.works--visible .works {
   &__header,
   &__content {
     padding: space(10) 0;
-    padding: space(10) 0;
   }
 
   &__title {
-    @include text('h2');
-    line-height: 1;
+    @include text('huge');
     margin-bottom: space(4);
+  }
+
+  &__caption {
+    @include text('h5');
+    color: color('grey-800');
+    display: block;
   }
 
   &__image {
     width: 100%;
-  }
-
-  &__caption {
-    @include text('h4');
-    display: block;
-    color: color('grey-800');
   }
 
   &__description {
@@ -101,6 +95,11 @@ body.works--visible .works {
   }
   .work__content {
     padding-left: space(10);
-    padding-RIGHT: space(10);
+    padding-right: space(10);
+    padding-top: space(4);
+  }
+
+  .work__caption {
+    @include text('h3');
   }
 }

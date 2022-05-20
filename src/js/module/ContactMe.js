@@ -53,6 +53,7 @@ class ContactForm {
 
     // init form state object
     this.form_state = this.get_initial_form_state();
+    this.update_ui();
 
     // init a form validator object
     this.validator = new ContactFormValidator();
@@ -66,6 +67,7 @@ class ContactForm {
       )
     );
 
+    // register events listener
     this.register_events();
   }
 
@@ -85,7 +87,8 @@ class ContactForm {
         contact__name: false,
         contact__email: false,
         contact__message: false,
-      }
+      },
+      id_dirty: false,
     };
   }
 
@@ -99,7 +102,7 @@ class ContactForm {
       if (this.form_state.form_fields_touched[form_field_name]) {
         const { is_valid, error } = await this.validator.validate_single_field(form_field_name, form_field_value);
         this.form_state.form_fields_errors[form_field_name] = is_valid ? '' : error;
-        this.update_form_helper_text();
+        this.update_ui();
       }
     }));
 
@@ -109,18 +112,19 @@ class ContactForm {
 
       if (form_field_value !== '') {
         this.form_state.form_fields_touched[form_field_name] = true;
+        if (!this.form_state.id_dirty) this.form_state.id_dirty = true;
       }
 
       if (this.form_state.form_fields_touched[form_field_name]) {
         const { is_valid, error } = await this.validator.validate_single_field(form_field_name, form_field_value);
         this.form_state.form_fields_errors[form_field_name] = is_valid ? '' : error;
-        this.update_form_helper_text();
+        this.update_ui();
       }
     }));
 
     this.node_form.addEventListener('reset', async (e) => {
       this.form_state = this.get_initial_form_state();
-      this.update_form_helper_text();
+      this.update_ui();
     });
 
     this.node_form.addEventListener('submit', async (e) => {
@@ -134,7 +138,7 @@ class ContactForm {
 
       // update the UI to notify user that there are or there are no errors
       this.form_state.form_fields_errors = { ...this.form_state.form_fields_errors, ...errors };
-      this.update_form_helper_text();
+      this.update_ui();
 
       // if form data is NOT valid, abort
       if (!is_valid) {
@@ -146,9 +150,11 @@ class ContactForm {
     });
   }
 
-  update_form_helper_text() {
+  update_ui() {
+
     const { form_data, form_fields_errors } = this.form_state;
 
+    // update form fields helper text...
     Object.entries(form_data).forEach(([field_name]) => {
       const node_field = findParentByClass(this.node_form.querySelector(`[name="${field_name}"]`), 'form-field');
       const node_helper_text = node_field.querySelector('.form-field__helper-text');
@@ -160,6 +166,24 @@ class ContactForm {
       node_field.classList.toggle('form-field--is-invalid', false);
       node_helper_text.innerHTML = '';
     });
+
+    // update form submit button
+    ((
+      node_button_submit,
+      node_button_reset
+    ) => {
+      if (!this.form_state.id_dirty) {
+        node_button_submit.classList.toggle('button--is-disabled', true);
+        node_button_reset.style.visibility = 'hidden';
+        return;
+      }
+      node_button_submit.classList.toggle('button--is-disabled', false);
+      node_button_reset.style.visibility = '';
+    })(
+      this.node_form.querySelector('[type="submit"]'),
+      this.node_form.querySelector('[type="reset"]')
+    );
+
   }
 
   async submit_data_to_server(form_data) {

@@ -1,9 +1,20 @@
+@use "sass:math";
+
+@function root-font-size($pixel-size) {
+  @return #{math.div($pixel-size, 16) * 100%};
+  /*
+  Return the root font size in percentage.
+  Use this function in the following way:
+  :root {
+    font-size: root-font-size(20); // set root/html font size to 20px ideally.
+  }
+  */
+}
 // Typography System
 :root {
 
-  
   @include atSmall {
-    font-size: 100%;
+    font-size: root-font-size(16); // 16 px
     @include genTypoScaleByRatio(1.125, -3, 15);
   }
   // @include atLarge {
@@ -13,7 +24,8 @@
   //   @include genTypoScaleByRatio(1.333, -3, 15);
   // }
   @include atLarge {
-    font-size: 112.5%;
+    font-size: root-font-size(18); // 18 px
+    font-size: root-font-size(20); // 20 px
     @include genTypoScaleByRatio(1.333, -3, 15);
   }
 
@@ -34,15 +46,16 @@
   // --font-family-sans-serif: "Myanmar MN", serif;
   // --font-family-sans-serif: Optima, sans-serif;
   // --font-family-sans-serif: "Hiragino Sans", sans-serif;
-  --font-family-sans-serif: "Heiti TC", sans-serif;
+  // --font-family-sans-serif: "Heiti TC", sans-serif;
   // --font-family-sans-serif: "Bangla MN", sans-serif;
   // --font-family-sans-serif: "Cambay Devanagari", sans-serif;
   // --font-family-sans-serif: "PT Sans", sans-serif;
   // --font-family-sans-serif: "AppleGothic", sans-serif;
+  // --font-family-sans-serif: "Yomm", sans-serif;
+  --font-family-sans-serif: "JM Heiti TC", sans-serif;
 
   --font-family-sans-serif-2: Optima, sans-serif;
 
-  
   --font-family-monospace: 'PT Mono', monospace;
   // --font-family-monospace: 'Andale Mono', monospace;
   // --font-family-monospace: 'Dank Mono', monospace;
@@ -57,17 +70,17 @@
 }
 
 :root {
-  --text-gigantic: normal 700 #{fontsize(13)}/1.5 var(--font-family-sans-serif);
-  --text-huge: normal 700 #{fontsize(11)}/1.5 var(--font-family-sans-serif);
-  --text-h1: normal 700 #{fontsize(9)}/1.5 var(--font-family-sans-serif);
-  --text-h2: normal 700 #{fontsize(7)}/1.5 var(--font-family-sans-serif);
-  --text-h3: normal 400 #{fontsize(5)}/1.5 var(--font-family-sans-serif);
-  --text-h4: normal 400 #{fontsize(3)}/1.5 var(--font-family-sans-serif);
-  --text-h5: normal 400 #{fontsize(1)}/1.5 var(--font-family-sans-serif);
+  --text-gigantic: normal 600 #{fontsize(7)}/1 var(--font-family-sans-serif);
+  --text-huge: normal 600 #{fontsize(6)}/1 var(--font-family-sans-serif);
+  --text-h1: normal 600 #{fontsize(5)}/1 var(--font-family-sans-serif);
+  --text-h2: normal 600 #{fontsize(4)}/1.1 var(--font-family-sans-serif);
+  --text-h3: normal 600 #{fontsize(3)}/1.1 var(--font-family-sans-serif);
+  --text-h4: normal 600 #{fontsize(2)}/1.3 var(--font-family-sans-serif);
+  --text-h5: normal 600 #{fontsize(1)}/1.5 var(--font-family-sans-serif);
+  --text-h6: normal 600 #{fontsize(0)}/1.5 var(--font-family-sans-serif);
   --text-body: normal 400 #{fontsize(0)}/1.5 var(--font-family-sans-serif);
   --text-small: normal 400 #{fontsize(-1)}/1.2 var(--font-family-sans-serif);
-  --text-small-2: normal 400 #{fontsize(-2)}/1.2 var(--font-family-sans-serif);
-  --text-small-3: normal 400 #{fontsize(-3)}/1.2 var(--font-family-sans-serif);
+  --text-small-2: normal 500 #{fontsize(-2)}/1.2 var(--font-family-sans-serif);
   // font: font-style font-variant font-weight font-size/line-height font-family; */
 
   /* Use this manual override for text that needs to be read easily, like copy of card, article, ... */

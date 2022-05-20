@@ -5,18 +5,15 @@ body.contact--visible .contact {
   visibility: visible;
 }
 
-
 .contact {
-  &__close-panel {
-    @include text('h5');
+
+  .contact-form {
+    padding-top: space(10);
+    padding-bottom: space(10);
   }
 
   &__headline {
-    @include text('h5');
-    order: 1;
+    @include text('h4');
   }
 
-  &__button {
-    @include text('h5');
-  }
 }

@@ -19,7 +19,7 @@ block variables
       {
         name: 'Color Compare',
         image: "/images/works/color-compare.jpg",
-        caption: 'Lorem ipsum dolor sit amet',
+        caption: 'Tool for comparing colors',
         description: '<p>A tool for who works everyday with design and color codes ( RGB, HEX, HSL )</p><p>Useful when you is need to lay down two or more colors next to each other to easily find the “sweet” combination spot. </p><p> Nothing less nothing more.</p>',
         permalink: '#'
       },
@@ -40,6 +40,19 @@ block variables
     ];
 
 block content
+  //- .demo-typography.stack
+    .text-gigantic Text Gigantic, in multiple lines.
+    .text-huge Text Huge, in multiple lines.
+    .text-h1 Text H1, in multiple lines.
+    .text-h2 Text H2, in multiple lines.
+    .text-h3 Text H3, in multiple lines.
+    .text-h4 Text H4, in multiple lines.
+    .text-h5 Text H5, in multiple lines.
+    .text-h6 Text H6 displayed in multiple lines to get the idead.
+    .text-body Text Body, in multiple lines.
+    .text-small Text Small, in multiple lines.
+    .text-small-2 Text Small 2, in multiple lines.
+
   .home-grid
     .home-grid__box.home-grid__box--no-bg.home-grid__box-different.home-grid-animate.animate-from-left
       span Jacopo Marrone
@@ -51,14 +64,14 @@ block content
   .floating-panel.works
     .floating-panel__inner
       .floating-panel__header
+        button.floating-panel__close-panel(type="button" data-js="works-toggler" data-icon="arrow-left" )
+          span Close
         .works__headline
           span Works
-        button.works__close-panel(type="button" data-js="works-toggler" data-icon="arrow-left" )
-          span Close
       .floating-panel__content
         .works__list
           each work in works
-            .works__item.work
+            .works__list-item.work
               .work__header
                 h2.work__title= work.name
                 span.work__caption= work.caption
@@ -67,9 +80,9 @@ block content
                 .work__description
                   | !{work.description}
                 .work__actions
-                  a.work__go-to-live.button.button--big(href= work.permalink)
+                  a.button(href= work.permalink)
                     span View Live
-            .works__item-separator.works__item-separator--full-width(data-shape-divider="arrow-down")
+            .works__list-item-separator.works__list-item-separator--full-width(data-shape-divider="arrow-down")
           .works__list-footer
             button.works__close-panel-footer(data-js="works-toggler")
               span Close
@@ -77,10 +90,10 @@ block content
   .floating-panel.contact
     .floating-panel__inner
       .floating-panel__header
-        .contact__headline
-          span Contact Me
         button.floating-panel__close-panel(type="button" data-js="contact-toggler" data-icon="arrow-left")
           span Close
+        .contact__headline
+          span Contact Me
       .floating-panel__content
         form.form.contact-form#contact-form
           .form__heading

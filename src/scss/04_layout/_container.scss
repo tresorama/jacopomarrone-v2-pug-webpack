@@ -1,4 +1,9 @@
+@mixin container {
+  padding-left: space(15);
+  padding-right: space(15);
+}
+
 .container {
   width: 100%;
-  padding: 0 space(15);
+  @include container;
 }

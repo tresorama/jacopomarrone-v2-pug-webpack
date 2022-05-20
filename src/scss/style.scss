@@ -23,5 +23,9 @@
 // 07 Pages - i.e. Home, About, Contact, etc.
 @import "./07_pages/home";
 
+// 08 Fixes - i.e. css that fix problems of varous generes, consider to refractor the code instead of fixes when possible
+@import "./08_fixes/index";
+
+
 // OPTIONAL: 
 @import "./10_dev-only/index";

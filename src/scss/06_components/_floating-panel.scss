@@ -9,14 +9,14 @@
 .floating-panel {
   & {
     position: fixed;
-    top: 0;left:0;right:0;bottom:0;
-    width: 100vw;
+    top: 0;left: 0;right: 0;bottom: 0;
+    width: 100%;
   }
 
   &:before {
     content: "";
     position: absolute;
-    top: 0;left:0;right:0;bottom:0;
+    top: 0;left: 0;right: 0;bottom: 0;
     z-index: -1;
     background-color: color("grey-500");
   }
@@ -28,11 +28,15 @@
     flex-direction: column;
   }
 
+  &__header,
+  &__content {
+    @include container;
+  }
+
   &__header {
-    @extend .container;
     @include i-am-not-clickable-but-my-children-are;
-    padding-top: space(8);
-    padding-bottom: space(8);
+    padding-top: space(10);
+    padding-bottom: space(10);
     position: absolute;
     top: 0;
     left: 0;
@@ -57,14 +61,17 @@
     );
   }
 
-
   &__content {
-    @extend .container;
     width: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    // padding: space(40) space(28);
     padding-top: space(40);
     padding-bottom: space(40);
   }
+
+
+  &__close-panel {
+    @include text('h4');
+  }
+
 }

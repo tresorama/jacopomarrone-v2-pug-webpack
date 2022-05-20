@@ -23,12 +23,12 @@ body,
   }
 
   &__box {
-    @include text("h5");
-    font-weight: 900;
+    @include text("h4");
+    // font-weight: 900;
   }
   &__box-different {
-    @include text("h2");
-    font-weight: 900;
+    @include text("h1");
+    // font-weight: 900;
   }
 
   &__box,

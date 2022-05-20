@@ -46,7 +46,6 @@
 
 .button--big {
   @include text('h5');
-  font-weight: 700;
 }
 
 .button--naked {
@@ -55,4 +54,9 @@
   &:after {
     background: none;
   }
+}
+
+.button--is-disabled {
+  opacity: 0.30;
+  pointer-events: none;
 }
