@@ -89,20 +89,17 @@ block content
             .form__section-heading
               span Information about you
             .form-field
-              .form-field__label
-                span Name
-              .form-field__input
-                input(type="text")
+              label.form-field__label(for="contact__name") Name
+              input.form-field__input(type="text" id="contact__name" name="contact__name" placeholder="Your name")
+              span.form-field__helper-text
             .form-field
-              .form-field__label
-                span Email
-              .form-field__input
-                input(type="email")
+              label.form-field__label(for="contact__email") Email
+              input.form-field__input(type="text" id="contact__email" name="contact__email" placeholder="Your email")
+              span.form-field__helper-text
             .form-field
-              .form-field__label
-                span Message
-              .form-field__input
-                textarea
+              label.form-field__label(for="contact__message") Message
+              textarea.form-field__input(id="contact__message" name="contact__message" placeholder="Tell me about your project in just a few words ...")
+              span.form-field__helper-text
           .form__section.form__section--actions
             button.button(type="submit")
               span Send
