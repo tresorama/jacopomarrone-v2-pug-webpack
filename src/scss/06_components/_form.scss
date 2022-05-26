@@ -9,26 +9,26 @@
 
   &__heading {
     @include text('h1');
-    margin-bottom: space(18);
+    margin-bottom: space('lg');
   }
 
   &__section + &__section {
-    margin-top: space(15);
+    margin-top: space('md');
   }
 
   &__section-heading {
     @include text('h2');
-    margin-bottom: space(6);
+    margin-bottom: space('md');
   }
   
   &__section--actions {
     display: flex;
     flex-wrap: wrap;
-    gap: space(3);
+    gap: space('xs');
   }
 
   &-field+&-field {
-    margin-top: space(4);
+    margin-top: space('md');
   }
 }
 
@@ -44,11 +44,11 @@
 
   &__label {
     @include text('small');
-    margin-bottom: space(1);
+    margin-bottom: space('xs');
   }
   &__helper-text {
     @include text('small');
-    margin-top: space(1);
+    margin-top: space('sm');
 
     // &:empty:before {
     //   content: "avoid jumping UI";

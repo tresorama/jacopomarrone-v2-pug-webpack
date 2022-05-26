@@ -11,6 +11,7 @@
     position: fixed;
     top: 0;left: 0;right: 0;bottom: 0;
     width: 100%;
+    width: 100vw;
   }
 
   &:before {
@@ -35,8 +36,8 @@
 
   &__header {
     @include i-am-not-clickable-but-my-children-are;
-    padding-top: space(10);
-    padding-bottom: space(10);
+    padding-top: space('md');
+    padding-bottom: space('md');
     position: absolute;
     top: 0;
     left: 0;
@@ -65,8 +66,8 @@
     width: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    padding-top: space(40);
-    padding-bottom: space(40);
+    padding-top: space('xl');
+    padding-bottom: space('xl');
   }
 
 

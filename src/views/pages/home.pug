@@ -99,7 +99,7 @@ block content
           .form__heading
             span Contact Me
           .form__section
-            .form__section-heading
+            //- .form__section-heading
               span Information about you
             .form-field
               label.form-field__label(for="contact__name") Name
@@ -111,7 +111,7 @@ block content
               span.form-field__helper-text
             .form-field
               label.form-field__label(for="contact__message") Message
-              textarea.form-field__input(id="contact__message" name="contact__message" placeholder="Tell me about your project in just a few words ...")
+              textarea.form-field__input(id="contact__message" name="contact__message" placeholder="Tell me about your project in just a few words ..." rows="6")
               span.form-field__helper-text
           .form__section.form__section--actions
             button.button(type="submit")

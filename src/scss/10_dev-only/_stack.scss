@@ -3,5 +3,6 @@
   flex-direction: column;
 }
 .stack > * + * {
-  margin-top: space(12);
+  margin-top: spaceOLD(12);
+  margin-top: space('md');
 }

@@ -1,6 +1,15 @@
+:root {
+  --container-padding-x: #{space('md')};
+  @include atLarge { --container-padding-x: #{space('lg')}; }
+}
+
+@function container-value() {
+  @return var(--container-padding-x);
+}
+
 @mixin container {
-  padding-left: space(15);
-  padding-right: space(15);
+  padding-left: var(--container-padding-x);
+  padding-right: var(--container-padding-x);
 }
 
 .container {

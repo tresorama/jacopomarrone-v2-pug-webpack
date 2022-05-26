@@ -7,13 +7,9 @@ body.contact--visible .contact {
 
 .contact {
 
-  .contact-form {
-    padding-top: space(10);
-    padding-bottom: space(10);
-  }
-
   &__headline {
     @include text('h4');
+    display: none;
   }
 
 }
