@@ -10,7 +10,7 @@ export default class FloatingPanelAnimation {
 
     this.is_visible = false;
     this.timeline = this.build_animation(this.node);
-    this.FADE_OUT();
+    // this.FADE_OUT();
   }
   build_animation(domNode) {
 

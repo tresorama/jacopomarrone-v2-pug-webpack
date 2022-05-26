@@ -5,7 +5,6 @@ import FloatingPanelAnimation from "./FloatingPanelAnimation";
 
 export default class ContactMe {
   constructor() {
-    // return;
     this.node_container = document.querySelector('.contact');
     if (!this.node_container) return;
     this.animation = new FloatingPanelAnimation(this.node_container, {
