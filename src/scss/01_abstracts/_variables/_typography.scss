@@ -70,27 +70,43 @@
 }
 
 :root {
-  --text-gigantic: normal 600 #{fontsize(7)}/1 var(--font-family-sans-serif);
-  --text-huge: normal 600 #{fontsize(6)}/1 var(--font-family-sans-serif);
-  --text-h1: normal 600 #{fontsize(5)}/1 var(--font-family-sans-serif);
-  --text-h2: normal 600 #{fontsize(4)}/1.1 var(--font-family-sans-serif);
-  --text-h3: normal 600 #{fontsize(3)}/1.1 var(--font-family-sans-serif);
-  --text-h4: normal 600 #{fontsize(2)}/1.3 var(--font-family-sans-serif);
-  --text-h5: normal 600 #{fontsize(1)}/1.5 var(--font-family-sans-serif);
-  --text-h6: normal 600 #{fontsize(0)}/1.5 var(--font-family-sans-serif);
-  --text-body: normal 400 #{fontsize(0)}/1.5 var(--font-family-sans-serif);
-  --text-small: normal 400 #{fontsize(-1)}/1.2 var(--font-family-sans-serif);
-  --text-small-2: normal 500 #{fontsize(-2)}/1.2 var(--font-family-sans-serif);
+  /* Font-Families */
+  --font-family-main: var(--font-family-sans-serif);
+  --font-family-book: var(--font-family-sans-serif-2);/* Use this for text that needs to be read easily, like copy of card, article, ... */
+  
+  /* Text Set */
+  --text-gigantic: normal 600 #{fontsize(7)}/1 var(--font-family-main);
+  --text-huge: normal 600 #{fontsize(6)}/1 var(--font-family-main);
+  --text-h1: normal 600 #{fontsize(5)}/1 var(--font-family-main);
+  --text-h2: normal 600 #{fontsize(4)}/1.1 var(--font-family-main);
+  --text-h3: normal 600 #{fontsize(3)}/1.1 var(--font-family-main);
+  --text-h4: normal 600 #{fontsize(2)}/1.3 var(--font-family-main);
+  --text-h5: normal 600 #{fontsize(1)}/1.5 var(--font-family-main);
+  --text-h6: normal 600 #{fontsize(0)}/1.5 var(--font-family-main);
+  --text-body: normal 400 #{fontsize(0)}/1.5 var(--font-family-main);
+  --text-small: normal 400 #{fontsize(-1)}/1.2 var(--font-family-main);
+  --text-small-2: normal 500 #{fontsize(-2)}/1.2 var(--font-family-main);
   // font: font-style font-variant font-weight font-size/line-height font-family; */
-
-  /* Use this manual override for text that needs to be read easily, like copy of card, article, ... */
-  --font-family-book: var(--font-family-sans-serif-2);
 
 }
 
 
 
-@mixin text($key) {
-  // i.e. text('h1'), text('body'), text('small-1')
+@mixin text($key: 'body', $family: 'main') {
   font: var(--text-#{$key});
+  @include font-family($family);
+}
+
+@mixin font-family($key: 'main') {
+
+  @if $key == 'book' {
+    font-family: var(--font-family-book);
+    letter-spacing: 0.01em;
+  }
+  @else {
+    // if ($key == 'main')
+    //     Use the 'default' font-family, whichis defined in this files at lines 
+    font-family: var(--font-family-main);
+    letter-spacing: -0.01em;
+  }
 }

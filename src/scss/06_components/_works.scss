@@ -69,8 +69,7 @@ body.works--visible .works {
   }
 
   &__description {
-    @include text("body");
-    font-family: var(--font-family-book);
+    @include text("body", $family: 'book');
 
     p {
       margin-bottom: space(4);
