@@ -6,38 +6,70 @@ const CopyPlugin = require("copy-webpack-plugin");
 module.exports = {
   mode: 'development',
   devtool: 'source-map',
+  // Webpack dev server configuration
   devServer: {
     static: './dist',
     watchFiles: ['src/**/*'],
   },
+  // Webpack entry point ( INPUT )
   entry: './src/js/index.js',
+  // Webpack output configuration ( OUTPUT )
   output: {
-    filename: 'main.js',
+    filename: 'main.[hash].js',
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
-    // When webpack encounters a .css file ...
     rules: [
+      // When webpack encounters a .css files
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: [
+          // Creates `style` nodes from JS strings
+          "style-loader",
+          // Translates CSS into CommonJS
+          "css-loader"
+        ],
       },
-      // When webpack encounters a .pug file ...
-      {
-        test: /\.pug$/,
-        loader: '@webdiscus/pug-loader',
-      },
-      // When webpack encounters a .scss/.sass file ...
+      // When webpack encounters a .sass|scss file ...
       {
         test: /\.s[ac]ss$/i,
         use: [
-          // Creates `style` nodes from JS strings
+          // Injects CSS to the DOM via JS (good in development)
           "style-loader",
           // Translates CSS into CommonJS
           "css-loader",
           // Compiles Sass to CSS
           "sass-loader",
         ],
+      },
+      // When webpack encounters a .js|jsx file...
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: [
+              // Convert new ES6 features to old ES5
+              [
+                "@babel/preset-env",
+                // Enable usage of js async/awaits
+                {
+                  "useBuiltIns": "usage",
+                  "corejs": 3,
+                  "targets": "defaults"
+                }
+              ],
+              // Convert JSX to normal JS
+              // "@babel/preset-react"
+            ],
+          }
+        }
+      },
+      // When webpack encounters a .pug file ...
+      {
+        test: /\.pug$/,
+        loader: '@webdiscus/pug-loader',
       },
     ],
   },
@@ -48,19 +80,17 @@ module.exports = {
         { from: "src/public", to: "." },
       ],
     }),
-    // Copy html pages to 'dist'
+    // Use "HTML Template" when building html files
+    // Webpack injects the JS and CSS files into the HTML file
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'src/index.pug'
     }),
     // new HtmlWebpackPlugin({
-    //   filename: 'calcola-guadagno.html',
-    //   template: 'src/pages/calcola-guadagno.html',
-    // }),
-    // new HtmlWebpackPlugin({
-    //   filename: 'oggetti-che-si-vendono-velocemente.html',
-    //   template: 'src/pages/oggetti-che-si-vendono-velocemente.html',
+    //   filename: 'about-us.html',
+    //   template: 'src/pages/about.html',
     // }),
   ],
 
 };
+
