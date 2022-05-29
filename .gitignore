@@ -1,3 +1,5 @@
+.env
+
 node_modules
 dist/
 build/
@@ -5,3 +7,4 @@ build/
 .cache
 .DS_Store
 .parcel-cache
+

@@ -1,0 +1,12 @@
+[build]
+  functions = "netlify-functions/" # Where to look for lambda functions
+[[redirects]]
+  from = '/api/*'
+  to = '/.netlify/functions/:splat'
+  status = 200
+
+[dev]
+  command = "npm run dev:server" # Command to start your dev server
+  publish = "dist" # If you use a _redirect file, provide the path to your static content folder
+  targetPort = 8080 # # The port for your application server, framework or site generator (i.e. WebpackDevServer port in dev)
+  port = 8888 # The port that the netlify dev will be accessible on

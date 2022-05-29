@@ -191,25 +191,26 @@ class ContactForm {
       contact__email: form_data.contact__email,
       contact__message: form_data.contact__message,
       source: window.location.href,
+      source_name: "portfolio-ontact-form",
       timestamp: Date.now(),
       date: new Date().toLocaleString(),
     };
 
     try {
-      // const response = await axios.post('/api/contact', data);
-      const response = await new Promise(resolve => setTimeout(() => { resolve({ status: 200 }) }, 1000));
+      // const response = await new Promise(resolve => setTimeout(() => { resolve({ status: 200 }) }, 1000));
+      const response = await axios.post('/api/contact-me', data);
 
       if (response.status === 200) {
         this.node_form.reset();
         Swal.fire(
-          'Thank you !',
-          "I'll be right back to you as soon as possible!",
+          'Message sent !',
+          "I'll be right back to you as soon as possible! You should receive a copy of the message in your email inbox.",
           'success'
         );
+        return;
       }
-      else {
-        throw new Error('Something went wrong');
-      }
+
+      throw new Error('Something went wrong');
 
     } catch (error) {
       Swal.fire({
@@ -217,8 +218,7 @@ class ContactForm {
         text: 'Something went wrong with submission, please retry !',
         icon: 'error',
         confirmButtonText: 'I understand'
-      })
-
+      });
     }
   }
 
