@@ -8,6 +8,8 @@ html(lang="en-US")
   
   body(class=`${bodyClassName}`)
 
+    include ./_body-before-content.pug
+
     block content
 
     include ./_footer.pug
