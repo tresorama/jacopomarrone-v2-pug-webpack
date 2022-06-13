@@ -18,6 +18,9 @@ module.exports = {
     filename: 'main.[hash].js',
     path: path.resolve(__dirname, 'dist'),
   },
+  resolve: {
+    extensions: ['', '.js', '.ts'],
+  },
   module: {
     rules: [
       // When webpack encounters a .css files
@@ -42,9 +45,15 @@ module.exports = {
           "sass-loader",
         ],
       },
+      // When webpack encounters a .ts|tsx file
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
       // When webpack encounters a .js|jsx file...
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: "babel-loader",
