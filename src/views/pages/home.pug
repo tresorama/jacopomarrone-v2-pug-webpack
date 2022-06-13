@@ -75,16 +75,16 @@ block content
       .floating-panel__content
         .works__list
           each work in works
-            .works__list-item.work(data-gtm-el=`works-wrapper__${work.slug}`)
+            .works__list-item.work(data-gtm-el=`works-wrapper__${work.slug}` data-gtm-key=work.slug)
               .work__header
                 h2.work__title= work.name
                 span.work__caption= work.caption
               img.work__image(src= work.image)
               .work__content
-                .work__description(data-gtm-el=`works-description__${work.slug}`)
+                .work__description(data-gtm-el=`works-description__${work.slug}` data-gtm-key=work.slug)
                   | !{work.description}
                 .work__actions
-                  a.button(href= work.permalink target="_blank" data-gtm-el=`works-permalink__${work.slug}`)
+                  a.button(href= work.permalink target="_blank" data-gtm-el=`works-permalink__${work.slug}` data-gtm-key=work.slug)
                     span View Live
             .works__list-item-separator.works__list-item-separator--full-width(data-shape-divider="arrow-down")
           .works__list-footer
