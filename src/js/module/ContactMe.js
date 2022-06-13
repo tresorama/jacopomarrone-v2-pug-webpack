@@ -2,6 +2,8 @@ import axios from 'axios';
 import * as yup from 'yup';
 import FloatingPanelAnimation from "./FloatingPanelAnimation";
 import Toast from './Toast';
+import GTM_CustomEventDispatcher from '../lib/GTM-CustomEventDispatcher';
+import GTMEvents from './GTMEvents';
 
 export default class ContactMe {
   constructor() {
@@ -192,11 +194,9 @@ class ContactForm {
       title: 'Message sent !',
       body: 'Thank you for your message. I will get back to you as soon as possible. You should receive a copy of the message in your email inbox.',
     });
-      Swal.fire({
-        title: 'Error!',
-        text: 'Something went wrong with submission, please retry !',
-        icon: 'error',
-        confirmButtonText: 'I understand'
+    GTM_CustomEventDispatcher.fire({
+      event: GTMEvents.contact_form_submit_success,
+      payload: { request_data },
     });
   }
 
@@ -208,6 +208,10 @@ class ContactForm {
       title: 'Error',
       body: 'Something went wrong with the form submission. Please try again.',
       confirmButtonText: 'I understand',
+    });
+    GTM_CustomEventDispatcher.fire({
+      event: GTMEvents.contact_form_submit_error,
+      payload: { request_data, error }
     });
   }
 
