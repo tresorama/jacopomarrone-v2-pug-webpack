@@ -60,9 +60,9 @@ block content
   .home-grid
     .home-grid__box.home-grid__box--no-bg.home-grid__box-different.home-grid-animate.animate-from-left
       span Jacopo Marrone
-    button.home-grid__box.home-grid-animate(data-js="works-toggler" data-gtm-el="home-box__works")
+    button.home-grid__box.home-grid-animate(data-js="works-toggler" data-gtm-el="home-box" data-gtm-el-key="works")
       span Works
-    button.home-grid__box.home-grid-animate(data-js="contact-toggler" data-gtm-el="home-box__contact-me")
+    button.home-grid__box.home-grid-animate(data-js="contact-toggler" data-gtm-el="home-box" data-gtm-el-key="contact-me")
       span Contact Me
 
   .floating-panel.works
@@ -75,16 +75,16 @@ block content
       .floating-panel__content
         .works__list
           each work in works
-            .works__list-item.work(data-gtm-el=`works-wrapper__${work.slug}` data-gtm-key=work.slug)
+            .works__list-item.work
               .work__header
                 h2.work__title= work.name
                 span.work__caption= work.caption
               img.work__image(src= work.image)
               .work__content
-                .work__description(data-gtm-el=`works-description__${work.slug}` data-gtm-key=work.slug)
+                .work__description(data-gtm-el=`works-description` data-gtm-el-key=work.slug)
                   | !{work.description}
                 .work__actions
-                  a.button(href= work.permalink target="_blank" data-gtm-el=`works-permalink__${work.slug}` data-gtm-key=work.slug)
+                  a.button(href= work.permalink target="_blank" data-gtm-el=`works-permalink` data-gtm-el-key=work.slug)
                     span View Live
             .works__list-item-separator.works__list-item-separator--full-width(data-shape-divider="arrow-down")
           .works__list-footer
@@ -99,7 +99,7 @@ block content
         .contact__headline
           span Contact Me
       .floating-panel__content
-        form.form.contact-form#contact-form(data-gtm-el="contact-form-form")
+        form.form.contact-form#contact-form
           .form__heading
             span Contact Me
           .form__section
@@ -118,7 +118,7 @@ block content
               textarea.form-field__input(id="contact__message" name="contact__message" placeholder="Tell me about your project in just a few words ..." rows="6")
               span.form-field__helper-text
           .form__section.form__section--actions
-            button.button(type="submit" data-gtm-el="contact-form-submit")
+            button.button(type="submit")
               span Send
             button.button.button--naked(type="reset")
               span Reset
