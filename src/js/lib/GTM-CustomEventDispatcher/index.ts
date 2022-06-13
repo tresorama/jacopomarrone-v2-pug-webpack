@@ -26,6 +26,7 @@ export default class GTM_CustomEventDispatcher {
     window.dataLayer.push({
       event,
       payload,
+      payload_json_string: JSON.stringify(payload),
     });
   }
 
