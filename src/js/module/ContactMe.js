@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as yup from 'yup';
-import Swal from 'sweetalert2';
 import FloatingPanelAnimation from "./FloatingPanelAnimation";
+import Toast from './Toast';
 
 export default class ContactMe {
   constructor() {
@@ -38,6 +38,7 @@ export default class ContactMe {
   }
 }
 
+// Utility function that traverses the DOM startinting from 'node' and returns the first parent node that matches the 'className'
 function findParentByClass(node, className) {
   if (!node) return null;
   if (node.classList.contains(className)) return node;
@@ -45,29 +46,27 @@ function findParentByClass(node, className) {
   return findParentByClass(node.parentNode, className);
 }
 
+// Contact Form Controller, who has the form state and triggers the form events
 class ContactForm {
   constructor() {
+    // Ensure form exists in DOM
     this.node_form = document.querySelector('form#contact-form');
     if (!this.node_form) return;
 
+    // Bind methods to this
+    this.dispatcher = this.dispatcher.bind(this);
+
     // init form state object
     this.form_state = this.get_initial_form_state();
-    this.update_ui();
-
+    // init form view 
+    this.view = new ContactFormView(this.node_form, this.dispatcher);
+    this.view_toast = new Toast();
     // init a form validator object
     this.validator = new ContactFormValidator();
 
-    // update UI of the form while user consume form fields
-    [...this.node_form.querySelectorAll('.form-field')].forEach(
-      node => new FormFieldStateObserver(
-        node.querySelector('.form-field__label'),
-        node.querySelector('.form-field__input'),
-        node
-      )
-    );
+    // update the view to reflect the initial state
+    this.update_ui();
 
-    // register events listener
-    this.register_events();
   }
 
   get_initial_form_state() {
@@ -87,15 +86,13 @@ class ContactForm {
         contact__email: false,
         contact__message: false,
       },
-      id_dirty: false,
+      is_dirty: false,
     };
   }
 
-  register_events() {
-
-    [...this.node_form.querySelectorAll('.form-field__input')].forEach(node => node.addEventListener('input', async (e) => {
-      const form_field_name = e.currentTarget.name;
-      const form_field_value = e.currentTarget.value;
+  async dispatcher({ event, payload }) {
+    if (event === 'form-field-change-value') {
+      const { form_field_name, form_field_value } = payload;
       this.form_state.form_data[form_field_name] = form_field_value;
 
       if (this.form_state.form_fields_touched[form_field_name]) {
@@ -103,15 +100,16 @@ class ContactForm {
         this.form_state.form_fields_errors[form_field_name] = is_valid ? '' : error;
         this.update_ui();
       }
-    }));
+      return;
+    }
 
-    [...this.node_form.querySelectorAll('.form-field__input')].forEach(node => node.addEventListener('blur', async (e) => {
-      const form_field_name = e.currentTarget.name;
+    if (event === 'form-field-blur') {
+      const { form_field_name } = payload;
       const form_field_value = this.form_state.form_data[form_field_name];
 
       if (form_field_value !== '') {
         this.form_state.form_fields_touched[form_field_name] = true;
-        if (!this.form_state.id_dirty) this.form_state.id_dirty = true;
+        if (!this.form_state.is_dirty) this.form_state.is_dirty = true;
       }
 
       if (this.form_state.form_fields_touched[form_field_name]) {
@@ -119,16 +117,16 @@ class ContactForm {
         this.form_state.form_fields_errors[form_field_name] = is_valid ? '' : error;
         this.update_ui();
       }
-    }));
+      return;
+    }
 
-    this.node_form.addEventListener('reset', async (e) => {
+    if (event === 'form-reset') {
       this.form_state = this.get_initial_form_state();
       this.update_ui();
-    });
+      return;
+    }
 
-    this.node_form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
+    if (event === 'form-submit') {
       // extract form data
       const { form_data } = this.form_state;
 
@@ -146,43 +144,16 @@ class ContactForm {
 
       // if form data is valid, submit the form
       this.submit_data_to_server(form_data);
-    });
+
+      return;
+    }
+
+    throw new Error('Unknown event in ContactForm.dispatcher, event: ' + event);
+
   }
 
   update_ui() {
-
-    const { form_data, form_fields_errors } = this.form_state;
-
-    // update form fields helper text...
-    Object.entries(form_data).forEach(([field_name]) => {
-      const node_field = findParentByClass(this.node_form.querySelector(`[name="${field_name}"]`), 'form-field');
-      const node_helper_text = node_field.querySelector('.form-field__helper-text');
-      if (form_fields_errors[field_name]) {
-        node_field.classList.toggle('form-field--is-invalid', true);
-        node_helper_text.innerHTML = form_fields_errors[field_name];
-        return;
-      }
-      node_field.classList.toggle('form-field--is-invalid', false);
-      node_helper_text.innerHTML = '';
-    });
-
-    // update form submit button
-    ((
-      node_button_submit,
-      node_button_reset
-    ) => {
-      if (!this.form_state.id_dirty) {
-        node_button_submit.classList.toggle('button--is-disabled', true);
-        node_button_reset.style.visibility = 'hidden';
-        return;
-      }
-      node_button_submit.classList.toggle('button--is-disabled', false);
-      node_button_reset.style.visibility = '';
-    })(
-      this.node_form.querySelector('[type="submit"]'),
-      this.node_form.querySelector('[type="reset"]')
-    );
-
+    this.view.update_ui(this.form_state);
   }
 
   async submit_data_to_server(form_data) {
@@ -191,7 +162,7 @@ class ContactForm {
       contact__email: form_data.contact__email,
       contact__message: form_data.contact__message,
       source: window.location.href,
-      source_name: "portfolio-ontact-form",
+      source_name: "portfolio-contact-form",
       timestamp: Date.now(),
       date: new Date().toLocaleString(),
     };
@@ -201,29 +172,48 @@ class ContactForm {
       const response = await axios.post('/api/contact-me', data);
 
       if (response.status === 200) {
-        this.node_form.reset();
-        Swal.fire(
-          'Message sent !',
-          "I'll be right back to you as soon as possible! You should receive a copy of the message in your email inbox.",
-          'success'
-        );
+        this.onSubmitSuccess({ request_data: data });
         return;
       }
 
-      throw new Error('Something went wrong');
+      throw new Error('Form data not submitted to server. Something went wrong');
 
     } catch (error) {
+      this.onSubmitFailure({ request_data: data, error });
+    }
+  }
+
+  onSubmitSuccess({ request_data }) {
+    console.info('Form data sent to server');
+
+    this.node_form.reset();
+    this.view_toast.show_message({
+      type: 'success',
+      title: 'Message sent !',
+      body: 'Thank you for your message. I will get back to you as soon as possible. You should receive a copy of the message in your email inbox.',
+    });
       Swal.fire({
         title: 'Error!',
         text: 'Something went wrong with submission, please retry !',
         icon: 'error',
         confirmButtonText: 'I understand'
-      });
-    }
+    });
+  }
+
+  onSubmitFailure({ request_data, error }) {
+    console.error(error);
+
+    this.view_toast.show_message({
+      type: 'error',
+      title: 'Error',
+      body: 'Something went wrong with the form submission. Please try again.',
+      confirmButtonText: 'I understand',
+    });
   }
 
 }
 
+// Contact Form Validator, who validates the form data
 class ContactFormValidator {
   constructor() {
     this.schema = yup.object().shape({
@@ -256,6 +246,86 @@ class ContactFormValidator {
 
 }
 
+// Contact Form View, who update the ui of the form, and dispatch events to ContactForm
+class ContactFormView {
+  constructor(node_form, dispatch) {
+    this.node_form = document.querySelector('form#contact-form');
+    if (!this.node_form) return;
+    this.dispatch = dispatch;
+    this.register_events();
+    this.register_automatic_ui_update();
+  }
+
+  register_automatic_ui_update() {
+    // update UI of the form while user consume form fields
+    [...this.node_form.querySelectorAll('.form-field')].forEach(
+      node => new FormFieldStateObserver(
+        node.querySelector('.form-field__label'),
+        node.querySelector('.form-field__input'),
+        node
+      )
+    );
+  }
+
+  register_events() {
+    [...this.node_form.querySelectorAll('.form-field__input')].forEach(node => node.addEventListener('input', async (e) => {
+      const form_field_name = e.currentTarget.name;
+      const form_field_value = e.currentTarget.value;
+      this.dispatch({ event: 'form-field-change-value', payload: { form_field_name, form_field_value } });
+    }));
+
+    [...this.node_form.querySelectorAll('.form-field__input')].forEach(node => node.addEventListener('blur', async (e) => {
+      const form_field_name = e.currentTarget.name;
+      this.dispatch({ event: 'form-field-blur', payload: { form_field_name } });
+    }));
+
+    this.node_form.addEventListener('reset', async (e) => {
+      this.dispatch({ event: 'form-reset' });
+    });
+
+    this.node_form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      this.dispatch({ event: 'form-submit' });
+    });
+  }
+
+  update_ui(form_state) {
+    const { form_data, form_fields_errors, is_dirty } = form_state;
+    const { node_form } = this;
+
+    // update form fields helper text...
+    Object.entries(form_data).forEach(([field_name]) => {
+      const node_field = findParentByClass(node_form.querySelector(`[name="${field_name}"]`), 'form-field');
+      const node_helper_text = node_field.querySelector('.form-field__helper-text');
+      if (form_fields_errors[field_name]) {
+        node_field.classList.toggle('form-field--is-invalid', true);
+        node_helper_text.innerHTML = form_fields_errors[field_name];
+        return;
+      }
+      node_field.classList.toggle('form-field--is-invalid', false);
+      node_helper_text.innerHTML = '';
+    });
+
+    // update form submit button
+    ((
+      node_button_submit,
+      node_button_reset
+    ) => {
+      if (!is_dirty) {
+        node_button_submit.classList.toggle('button--is-disabled', true);
+        node_button_reset.style.visibility = 'hidden';
+        return;
+      }
+      node_button_submit.classList.toggle('button--is-disabled', false);
+      node_button_reset.style.visibility = '';
+    })(
+      node_form.querySelector('[type="submit"]'),
+      node_form.querySelector('[type="reset"]')
+    );
+
+
+  }
+}
 class FormFieldStateObserver {
   constructor(node_label, node_control, node_field) {
     this.node_label = node_label; // <label></label>
