@@ -6,7 +6,6 @@ we need to use 'window.dataLayer' to access the dataLayer.
 But typescript doesn't support 'window.dataLayer' yet,
 so we declare that dataLayer exists in the global scope.
 
-so we need to use 'window["dataLayer"]' to access the dataLayer.
 */
 
 declare global {
