@@ -47,13 +47,15 @@ block content
 
   //- include ../partials/_demo_typography.pug
 
-  .home-grid
-    .home-grid__box.home-grid__box--no-bg.home-grid__box-different.home-grid-animate.animate-from-left
-      span Jacopo Marrone
-    button.home-grid__box.home-grid-animate(data-js="works-toggler" data-gtm-el="home-box" data-gtm-el-key="works")
-      span Works
-    button.home-grid__box.home-grid-animate(data-js="contact-toggler" data-gtm-el="home-box" data-gtm-el-key="contact-me")
-      span Contact Me
+  .home-grid__wrapper
+    .home-grid.home-grid--shrinked
+      .home-grid__box.home-grid__box--no-bg.home-grid__box-different.home-grid-animate.animate-from-left
+        span Jacopo Marrone
+      button.home-grid__box.home-grid-animate(data-js="works-toggler" data-gtm-el="home-box" data-gtm-el-key="works")
+        span Works
+      button.home-grid__box.home-grid-animate(data-js="contact-toggler" data-gtm-el="home-box" data-gtm-el-key="contact-me")
+        span Contact Me
+    .home-grid.home-grid--expanded
 
   .floating-panel.works
     .floating-panel__inner
