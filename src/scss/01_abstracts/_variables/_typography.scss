@@ -124,11 +124,11 @@
 }
 
 
-// Defined a mixin to be used in the project.
-
+// Define a mixin to be used in the project.
 @mixin text($key: 'body', $family: 'main') {
   font: var(--text-#{$key});
   @include font-family($family);
+  @content; // in case cosnumer wants to add some custom css, manly overrides
 }
 
 @mixin font-family($key: 'main') {
@@ -138,7 +138,6 @@
     letter-spacing: 0.01em;
   }
   @else {
-    // if ($key == 'main')
     //     Use the 'default' font-family, whichis defined in this files at lines 
     font-family: var(--font-family-main);
     letter-spacing: -0.01em;
