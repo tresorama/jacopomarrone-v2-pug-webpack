@@ -1,9 +1,23 @@
-footer
-  p
-    a.back-to-top.js-back-to-top(href='#') Back to top
-  p
-    | Made with Pug, SASS, ES6 - 
-    a(href='#') Source Code
+- 
+  const links = [
+    { label: 'CodeSandbox', permalink: 'https://codesandbox.io/u/tresorama'},
+    { label: 'Github', permalink: 'https://github.com/tresorama'},
+    { label: 'BitBucket', permalink: 'https://bitbucket.org/tresorama/'},
+    { label: 'CodePen', permalink: 'https://codepen.io/tresorama'}
+  ];
+  const portfolio_permalink = "https://bitbucket.org/tresorama/the-portfolio/src/master/";
+
+
+footer.site-footer
+  .site-footer__portfolio-details
+    span.site-footer__description Made with Pug, SASS, ES6 - 
+    a(href=portfolio_permalink)
+      span.site-footer__link.site-footer__source-code-link Source Code
+  ul.site-footer__links-list
+    for link in links
+      li.site-footer__link
+        a(href=link.permalink)= link.label
+ 
 
 //- Import Main JS
 include _main-script.pug
