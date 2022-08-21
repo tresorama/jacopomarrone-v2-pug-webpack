@@ -3,6 +3,7 @@
 body:not(.works--visible) .works {
   visibility: hidden;
 }
+
 body.works--visible .works {
   visibility: visible;
 }
@@ -79,6 +80,10 @@ body.works--visible .works {
       margin-bottom: spaceOLD(4);
       margin-bottom: space('sm');
     }
+
+    .secondary-text {
+      color: color('grey-700');
+    }
   }
 
   &__actions {
@@ -95,9 +100,11 @@ body.works--visible .works {
     display: grid;
     grid-template-columns: 2fr 1fr;
   }
+
   .work__image {
     grid-column: 1/2;
   }
+
   .work__content {
     padding-left: space('md');
     padding-right: space('md');
