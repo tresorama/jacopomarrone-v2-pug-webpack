@@ -11,3 +11,5 @@ TODO: Comprare domino e Aggiungere dominio su Netlify
 TODO: Aggiungere link su linkedin.com
 
 TODO: UI - sistemare Toast
+
+TODO: UI - add loading indicator for pending email send in contact form
